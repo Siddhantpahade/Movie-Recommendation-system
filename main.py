@@ -61,7 +61,7 @@ def recommend():
         lst = list(enumerate(sim[i]))
         lst = sorted(lst, key=lambda x: x[1], reverse=True)
         lst = lst[1:11]
-        recommendations = [data['movie_title'][a] for a, _ in lst]
+        recommendations = list({data['movie_title'][a] for a, _ in lst})  # Remove duplicates
         print(f"Recommendations for '{movie}': {recommendations}")
         return render_template('recommend.html', movie=movie, r=recommendations, t='l')
 
