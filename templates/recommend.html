@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations for {{ movie }}</title>
+</head>
+<body>
+    <h1>Recommendations for {{ movie }}</h1>
+    {% if t == 's' %}
+        <p>{{ r }}</p>
+    {% else %}
+        <ul>
+            {% for recommendation in r %}
+                <li>{{ recommendation }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <a href="/">Back to Home</a>
+</body>
+</html>

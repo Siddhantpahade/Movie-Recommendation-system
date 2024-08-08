@@ -1,66 +1,37 @@
-import numpy as np
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # This will load environment variables from the .env file
+
+from flask import Flask, request, jsonify
 import pandas as pd
-from flask import Flask, render_template, request
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
-def create_sim():
-    try:
-        data = pd.read_csv('data.csv')
-        print("Data loaded successfully")
-        if 'comb' not in data.columns:
-            print("Error: 'comb' column not found in data")
-            return None, None
-        
-        data['comb'] = data['comb'].fillna('')
-        cv = CountVectorizer()
-        count_matrix = cv.fit_transform(data['comb'])
-        sim = cosine_similarity(count_matrix)
-        print("Similarity matrix created successfully")
-        return data, sim
-    except Exception as e:
-        print(f"Error in create_sim: {e}")
-        return None, None
-
-def rcmd(m):
-    m = m.lower()
-    try:
-        data.head()
-        sim.shape
-    except NameError as ne:
-        print(f"NameError: {ne}")
-        data, sim = create_sim()
-        if data is None or sim is None:
-            return 'Data or similarity matrix could not be created.'
-    
-    print(f"Searching for movie: {m}")
-    if m not in data['movie_title'].str.lower().unique():
-        print(f"Movie '{m}' not found in database.")
-        return 'This movie is not in our database. Please check if you spelled it correct.'
-    else:
-        i = data.loc[data['movie_title'].str.lower() == m].index[0]
-        lst = list(enumerate(sim[i]))
-        lst = sorted(lst, key=lambda x: x[1], reverse=True)
-        lst = lst[1:11]
-        l = [data['movie_title'][a] for a, _ in lst]
-        print(f"Recommendations for '{m}': {l}")
-        return l
 
 app = Flask(__name__)
 
-@app.route("/")
-def home():
-    return render_template('home.html')
+# Load data
+try:
+    data = pd.read_csv('data.csv')  # Replace with the correct path to your processed data
+    print("Data loaded successfully")
+    print(data.head())
+except Exception as e:
+    print(f"Error loading data: {e}")
+    data = None
 
-@app.route("/recommend")
+# Check if 'comb' column exists
+if data is not None and 'comb' not in data.columns:
+    raise ValueError("'comb' column not found in data")
+
+@app.route('/recommend', methods=['GET'])
 def recommend():
     movie = request.args.get('movie')
-    r = rcmd(movie)
-    movie = movie.upper()
-    if type(r) == str:
-        return render_template('recommend.html', movie=movie, r=r, t='s')
-    else:
-        return render_template('recommend.html', movie=movie, r=r, t='l')
+    
+    if data is None:
+        return jsonify({'error': 'Data is not loaded'}), 500
+
+    # Recommendation logic (example)
+    filtered_data = data[data['comb'] == movie]  # Adjust based on your logic
+
+    return jsonify({'message': f'Recommendations for {movie}', 'data': filtered_data.to_dict(orient='records')})
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
