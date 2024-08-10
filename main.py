@@ -1,3 +1,4 @@
+import openai
 from dotenv import load_dotenv
 import os
 from flask import Flask, request, render_template, jsonify
@@ -47,25 +48,18 @@ def recommend():
     if data is None or sim is None:
         return jsonify({'error': 'Data or similarity matrix is not loaded'}), 500
 
-    # Normalize the movie titles in the DataFrame for comparison
     data['movie_title_normalized'] = data['movie_title'].str.strip().str.lower()
 
-    # Debugging: Print normalized movie titles
-    print("Normalized movie titles in the dataset:")
-    print(data['movie_title_normalized'].head())
-
-    # Recommendation logic
     if movie not in data['movie_title_normalized'].unique():
-        print(f"Movie '{movie}' not found in database.")
-        return render_template('recommend.html', movie=format_title(movie), r='This movie is not in our database. Please check if you spelled it correct.', t='s')
+        return render_template('recommend.html', movie=movie, r='This movie is not in our database. Please check if you spelled it correctly.', t='s')
     else:
         i = data.loc[data['movie_title_normalized'] == movie].index[0]
         lst = list(enumerate(sim[i]))
         lst = sorted(lst, key=lambda x: x[1], reverse=True)
         lst = lst[1:11]
-        recommendations = list({format_title(data['movie_title'][a]) for a, _ in lst})  # Remove duplicates and capitalize properly
-        print(f"Recommendations for '{movie}': {recommendations}")
-        return render_template('recommend.html', movie=format_title(movie), r=recommendations, t='l')
+        recommendations = list({format_title(data['movie_title'][a]) for a, _ in lst})
+        return render_template('recommend.html', movie=movie, r=recommendations, t='l')
 
+# Start the Flask app
 if __name__ == '__main__':
     app.run(debug=True)

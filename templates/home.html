@@ -8,52 +8,64 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             color: white;
+            overflow: hidden;
         }
         .container {
             background-color: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 10px;
+            padding: 50px;
+            border-radius: 15px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
         }
         h1 {
             margin-bottom: 30px;
             font-weight: 600;
+            font-size: 36px;
         }
         input[type="text"] {
             padding: 15px;
-            width: 80%;
+            width: 70%;
             border: none;
             border-radius: 25px;
             margin-bottom: 20px;
-            font-size: 16px;
+            font-size: 18px;
+            color: #333;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        input[type="text"]:focus {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            outline: none;
         }
         button {
             padding: 15px 30px;
-            background-color: #007bff;
+            background-color: #ff7e5f;
             color: white;
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 600;
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #ff5f5f;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to the Movie Recommendation System</h1>
-        <form action="/recommend" method="get">
+        <h1>Find Your Favorite Movie</h1>
+        <form id="movieForm" action="/recommend" method="get">
             <input type="text" id="movie" name="movie" placeholder="Enter movie name here" required>
             <button type="submit">Get Recommendations</button>
         </form>
