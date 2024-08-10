@@ -4,13 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Recommendation System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        input[type="text"] {
+            padding: 15px;
+            width: 80%;
+            border: none;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        button {
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Movie Recommendation System</h1>
-    <form action="/recommend" method="get">
-        <label for="movie">Enter a movie title:</label>
-        <input type="text" id="movie" name="movie" required>
-        <button type="submit">Get Recommendations</button>
-    </form>
+    <div class="container">
+        <h1>Welcome to the Movie Recommendation System</h1>
+        <form action="/recommend" method="get">
+            <input type="text" id="movie" name="movie" placeholder="Enter movie name here" required>
+            <button type="submit">Get Recommendations</button>
+        </form>
+    </div>
 </body>
 </html>

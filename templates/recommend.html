@@ -4,18 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recommendations for {{ movie }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 60%;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li i {
+            margin-right: 10px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Recommendations for {{ movie }}</h1>
-    {% if t == 's' %}
-        <p>{{ r }}</p>
-    {% else %}
-        <ul>
-            {% for recommendation in r %}
-                <li>{{ recommendation }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <a href="/">Back to Home</a>
+    <div class="container">
+        <h1>"{{ movie | capitalize }}" is a great choice.</h1>
+        <p>Here are some more like this:</p>
+        {% if t == 's' %}
+            <p>{{ r }}</p>
+        {% else %}
+            <ul>
+                {% for recommendation in r %}
+                    <li><i class="fas fa-film"></i>{{ recommendation }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <a href="/"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
 </body>
 </html>
